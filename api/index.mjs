@@ -60,11 +60,14 @@ function json(res, code, obj) {
 
 function readBody(req, limit = 200 * 1024) {
   return new Promise((resolve, reject) => {
-    if (req.body !== undefined && req.body !== null) {
+    // на Vercel чтение req.body может бросить исключение при сломанном JSON
+    let body;
+    try { body = req.body; } catch { return reject(new Error('invalid json')); }
+    if (body !== undefined && body !== null) {
       try {
-        if (typeof req.body === 'string') return resolve(req.body ? JSON.parse(req.body) : {});
-        if (Buffer.isBuffer(req.body)) return resolve(req.body.length ? JSON.parse(req.body.toString('utf8')) : {});
-        return resolve(req.body);
+        if (typeof body === 'string') return resolve(body ? JSON.parse(body) : {});
+        if (Buffer.isBuffer(body)) return resolve(body.length ? JSON.parse(body.toString('utf8')) : {});
+        return resolve(body);
       } catch {
         return reject(new Error('invalid json'));
       }
@@ -317,8 +320,8 @@ export default async function handler(req, res) {
 
     return json(res, 404, { error: 'not found' });
   } catch (e) {
-    if (e.message === 'invalid json') return json(res, 400, { error: 'Некорректный JSON в запросе' });
-    if (e.message === 'body too large') return json(res, 413, { error: 'Слишком большой запрос' });
+    if (/invalid json/i.test(e.message || '')) return json(res, 400, { error: 'Некорректный JSON в запросе' });
+    if (e.message === 'body too large' || e.statusCode === 413) return json(res, 413, { error: 'Слишком большой запрос' });
     console.error('[api]', e);
     return json(res, 500, { error: 'internal error' });
   }
