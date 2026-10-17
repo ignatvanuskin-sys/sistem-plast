@@ -8,7 +8,6 @@ const OUT = path.resolve('public/img');
 const IMAGES = {
   // Hero
   'hero-day.jpg': 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1440&q=75&auto=format&fit=crop',
-  'hero-night.jpg': 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1440&q=75&auto=format&fit=crop',
   // Портфолио
   'p1.jpg': 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1100&q=72&auto=format&fit=crop',
   'p2.jpg': 'https://images.unsplash.com/photo-1722649944570-ddf8a6ed8a03?w=900&h=1400&q=72&auto=format&fit=crop',

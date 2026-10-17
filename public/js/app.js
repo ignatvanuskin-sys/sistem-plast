@@ -112,23 +112,6 @@
     $$('.count').forEach(el => { el.textContent = Number(el.dataset.count || 0).toLocaleString('ru-RU'); });
   }
 
-  // ---------------------------------------------------------- day / night --
-  const dayNight = $('#dayNightToggle');
-  if (dayNight) {
-    $$('.daynight__option', dayNight).forEach(opt => {
-      opt.addEventListener('click', () => {
-        const mode = opt.dataset.mode;
-        $$('.daynight__option', dayNight).forEach(o => {
-          const on = o === opt;
-          o.classList.toggle('active', on);
-          o.setAttribute('aria-pressed', String(on));
-        });
-        $('#heroDay')?.classList.toggle('active', mode === 'day');
-        $('#heroNight')?.classList.toggle('active', mode === 'night');
-      });
-    });
-  }
-
   // ------------------------------------------------------- reviews slider --
   const track = $('#reviewsTrack');
   if (track) {
