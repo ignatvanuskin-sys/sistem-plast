@@ -1,0 +1,13 @@
+# Не загружать на Vercel
+.vercel/
+.env
+.env.local
+.env.*
+node_modules/
+data/
+config.json
+tools/
+server.js
+README.md
+package.json
+package-lock.json

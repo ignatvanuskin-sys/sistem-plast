@@ -4,7 +4,11 @@ data/leads.json
 
 # Системное и служебное
 node_modules/
+.vercel
 *.log
 .DS_Store
 Thumbs.db
 desktop.ini
+
+.vercel
+.env*
