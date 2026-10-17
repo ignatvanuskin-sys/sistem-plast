@@ -8,15 +8,17 @@
   <meta name="keywords" content="пластиковые окна Караганда, остекление балконов Караганда, окна ПВХ, двери ПВХ, витражи Караганда, Систем Пласт, Sistem Plast">
   <meta name="theme-color" content="#060A13">
   <meta name="format-detection" content="telephone=yes">
-  <link rel="canonical" href="https://sistem-plast.kz/">
+  <!-- ВАЖНО: домен сайта. Если подключите sistem-plast.kz — замените адрес здесь,
+       а также в блоках og:url, og:image, схеме ниже, в sitemap.xml и robots.txt -->
+  <link rel="canonical" href="https://sistem-plast.vercel.app/">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Систем Пласт">
-  <meta property="og:url" content="https://sistem-plast.kz/">
+  <meta property="og:url" content="https://sistem-plast.vercel.app/">
   <meta property="og:title" content="Систем Пласт — окна, балконы и двери в Караганде. С 2003 года">
   <meta property="og:description" content="Собственное производство. Бесплатный замер по городу, гарантия до 10 лет, рассрочка 0-0-24. Рейтинг 5,0 на 2ГИС.">
-  <meta property="og:image" content="https://sistem-plast.kz/img/og-image.jpg">
+  <meta property="og:image" content="https://sistem-plast.vercel.app/img/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Систем Пласт — окна, в которых тихо, тепло и красиво">
@@ -26,13 +28,13 @@
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 
-  <noscript><style>.reveal { opacity: 1; transform: none; }</style></noscript>
+  <noscript><style>.reveal { opacity: 1 !important; transform: none !important; } .preloader { display: none !important; }</style></noscript>
 
-  <link rel="preload" as="image" href="img/hero-day.jpg">
+  <link rel="preload" as="image" type="image/webp" href="img/hero-day.webp?v=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=8">
+  <link rel="stylesheet" href="css/style.css?v=9">
 
   <!-- SEO: структурированные данные -->
   <script type="application/ld+json">
@@ -42,9 +44,9 @@
     "name": "Систем Пласт",
     "alternateName": "Sistem Plast",
     "description": "Производство и установка пластиковых окон, остекление балконов и лоджий, входные двери, витражи и алюминиевые конструкции в Караганде с 2003 года.",
-    "image": "https://sistem-plast.kz/img/og-image.jpg",
+    "image": "https://sistem-plast.vercel.app/img/og-image.jpg",
     "telephone": "+7-700-727-27-37",
-    "url": "https://sistem-plast.kz/",
+    "url": "https://sistem-plast.vercel.app/",
     "priceRange": "₸₸",
     "address": {
       "@type": "PostalAddress",
@@ -132,7 +134,7 @@
     </nav>
 
     <div class="header__right">
-      <a class="header__phone" href="tel:+77007272737">
+      <a class="header__phone" href="tel:+77007272737" aria-label="Позвонить +7 700 727 27 37">
         <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>
         <span>+7 700 727 27 37</span>
       </a>
@@ -149,8 +151,8 @@
   <!-- ================================================================= HERO -->
   <section class="hero">
     <div class="hero__bg">
-      <img src="img/hero-day.jpg" alt="Светлая гостиная с панорамными пластиковыми окнами от Систем Пласт" class="hero__img hero__img--day active" id="heroDay">
-      <img src="img/hero-night.jpg" alt="Дом с панорамным остеклением ночью" class="hero__img hero__img--night" id="heroNight" loading="lazy">
+      <picture><source srcset="img/hero-day.webp?v=1" type="image/webp"><img src="img/hero-day.jpg?v=1" alt="Светлая гостиная с панорамными пластиковыми окнами от Систем Пласт" class="hero__img hero__img--day active" id="heroDay"></picture>
+      <picture><source srcset="img/hero-night.webp?v=1" type="image/webp"><img src="img/hero-night.jpg?v=1" alt="Дом с панорамным остеклением ночью" class="hero__img hero__img--night" id="heroNight" loading="lazy"></picture>
       <div class="hero__overlay"></div>
       <div class="hero__glow"></div>
     </div>
@@ -182,17 +184,17 @@
         </div>
 
         <div class="hero__facts reveal">
-          <div class="hero__fact"><strong><span class="count" data-count="23">0</span>+</strong><span>года на рынке</span></div>
-          <div class="hero__fact"><strong><span class="count" data-count="63">0</span>+</strong><span>фото работ на 2ГИС</span></div>
-          <div class="hero__fact"><strong><span class="count" data-count="10">0</span> лет</strong><span>гарантия по договору</span></div>
+          <div class="hero__fact"><strong><span class="count" data-count="23">23</span>+</strong><span>года на рынке</span></div>
+          <div class="hero__fact"><strong><span class="count" data-count="63">63</span>+</strong><span>фото работ на 2ГИС</span></div>
+          <div class="hero__fact"><strong><span class="count" data-count="10">10</span> лет</strong><span>гарантия по договору</span></div>
         </div>
       </div>
 
       <div class="hero__aside reveal">
-        <button class="daynight" id="dayNightToggle" aria-label="Переключить день и ночь">
-          <span class="daynight__option active" data-mode="day"><svg class="i" aria-hidden="true"><use href="#i-sun"/></svg> День</span>
-          <span class="daynight__option" data-mode="night"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg> Ночь</span>
-        </button>
+        <div class="daynight" id="dayNightToggle" role="group" aria-label="Время суток: день или ночь">
+          <button type="button" class="daynight__option active" data-mode="day" aria-pressed="true"><svg class="i" aria-hidden="true"><use href="#i-sun"/></svg> День</button>
+          <button type="button" class="daynight__option" data-mode="night" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg> Ночь</button>
+        </div>
         <p class="hero__aside-note">Наши окна одинаково тёплые и ночью, и днём:<br>энергосберегающий стеклопакет удерживает тепло,<br>а шумоизоляция приглушает город до 34 дБ.</p>
       </div>
     </div>
@@ -546,59 +548,59 @@
 
       <div class="works__grid" id="worksGrid">
         <figure class="work" data-cat="windows" data-title="Окно в квартире — вид на город">
-          <img src="img/p1.jpg?v=9" alt="Пластиковое окно с видом на город" loading="lazy">
+          <picture><source srcset="img/p1.webp?v=10" type="image/webp"><img src="img/p1.jpg?v=10" alt="Пластиковое окно с видом на город" loading="lazy"></picture>
           <figcaption><span>Окна</span>Окно с видом на город</figcaption>
         </figure>
         <figure class="work work--tall" data-cat="balcony" data-title="Остекление балконов — кирпичный дом">
-          <img src="img/p2.jpg?v=9" alt="Остеклённые балконы в кирпичном доме" loading="lazy">
+          <picture><source srcset="img/p2.webp?v=10" type="image/webp"><img src="img/p2.jpg?v=10" alt="Остеклённые балконы в кирпичном доме" loading="lazy"></picture>
           <figcaption><span>Балконы</span>Остекление балконов</figcaption>
         </figure>
         <figure class="work" data-cat="windows" data-title="Окна в частном доме — современный проект">
-          <img src="img/p3.jpg?v=9" alt="Большие окна в современном частном доме" loading="lazy">
+          <picture><source srcset="img/p3.webp?v=10" type="image/webp"><img src="img/p3.jpg?v=10" alt="Большие окна в современном частном доме" loading="lazy"></picture>
           <figcaption><span>Окна</span>Окна в частном доме</figcaption>
         </figure>
         <figure class="work" data-cat="balcony" data-title="Остекление лоджий в новом доме">
-          <img src="img/p4.jpg?v=9" alt="Дом с остеклёнными лоджиями" loading="lazy">
+          <picture><source srcset="img/p4.webp?v=10" type="image/webp"><img src="img/p4.jpg?v=10" alt="Дом с остеклёнными лоджиями" loading="lazy"></picture>
           <figcaption><span>Балконы</span>Лоджии в новом доме</figcaption>
         </figure>
         <figure class="work work--wide" data-cat="windows" data-title="Остекление загородного дома">
-          <img src="img/p5.jpg?v=9" alt="Окна в загородном доме" loading="lazy">
+          <picture><source srcset="img/p5.webp?v=10" type="image/webp"><img src="img/p5.jpg?v=10" alt="Окна в загородном доме" loading="lazy"></picture>
           <figcaption><span>Окна</span>Загородный дом</figcaption>
         </figure>
         <figure class="work" data-cat="windows" data-title="Окно с ламинацией «тёмный дуб»">
-          <img src="img/p6.jpg?v=9" alt="Окно с тёмной ламинацией" loading="lazy">
+          <picture><source srcset="img/p6.webp?v=10" type="image/webp"><img src="img/p6.jpg?v=10" alt="Окно с тёмной ламинацией" loading="lazy"></picture>
           <figcaption><span>Окна</span>Ламинация «тёмный дуб»</figcaption>
         </figure>
         <figure class="work" data-cat="windows" data-title="Замена окон в панельном доме">
-          <img src="img/p7.jpg?v=9" alt="Новые окна в панельном доме" loading="lazy">
+          <picture><source srcset="img/p7.webp?v=10" type="image/webp"><img src="img/p7.jpg?v=10" alt="Новые окна в панельном доме" loading="lazy"></picture>
           <figcaption><span>Окна</span>Замена окон в панельном доме</figcaption>
         </figure>
         <figure class="work work--tall" data-cat="vitrage" data-title="Фасадное остекление — вид изнутри">
-          <img src="img/p8.jpg?v=9" alt="Фасадное остекление офиса изнутри" loading="lazy">
+          <picture><source srcset="img/p8.webp?v=10" type="image/webp"><img src="img/p8.jpg?v=10" alt="Фасадное остекление офиса изнутри" loading="lazy"></picture>
           <figcaption><span>Витражи</span>Витражи офиса</figcaption>
         </figure>
         <figure class="work" data-cat="vitrage" data-title="Монтаж стеклянных перегородок в офисе">
-          <img src="img/p9.jpg?v=9" alt="Стеклянные перегородки — монтаж" loading="lazy">
+          <picture><source srcset="img/p9.webp?v=10" type="image/webp"><img src="img/p9.jpg?v=10" alt="Стеклянные перегородки — монтаж" loading="lazy"></picture>
           <figcaption><span>Витражи</span>Стеклянные перегородки</figcaption>
         </figure>
         <figure class="work" data-cat="windows" data-title="Арочное окно — нестандартный проект">
-          <img src="img/p10.jpg?v=9" alt="Арочное окно в гранитном фасаде" loading="lazy">
+          <picture><source srcset="img/p10.webp?v=10" type="image/webp"><img src="img/p10.jpg?v=10" alt="Арочное окно в гранитном фасаде" loading="lazy"></picture>
           <figcaption><span>Окна</span>Арочное окно</figcaption>
         </figure>
         <figure class="work work--wide" data-cat="vitrage" data-title="Витрины и входная группа магазина">
-          <img src="img/p11.jpg?v=9" alt="Витрины магазина — остекление входной группы" loading="lazy">
+          <picture><source srcset="img/p11.webp?v=10" type="image/webp"><img src="img/p11.jpg?v=10" alt="Витрины магазина — остекление входной группы" loading="lazy"></picture>
           <figcaption><span>Витражи</span>Витрины магазина</figcaption>
         </figure>
         <figure class="work work--tall" data-cat="doors" data-title="Установка стеклянной двери">
-          <img src="img/p12.jpg?v=9" alt="Монтаж стеклянной двери" loading="lazy">
+          <picture><source srcset="img/p12.webp?v=10" type="image/webp"><img src="img/p12.jpg?v=10" alt="Монтаж стеклянной двери" loading="lazy"></picture>
           <figcaption><span>Двери</span>Стеклянная дверь</figcaption>
         </figure>
         <figure class="work" data-cat="balcony" data-title="Остеклённые балконы-эркеры в новом доме">
-          <img src="img/p13.jpg?v=9" alt="Остеклённые балконы и эркеры в новом доме" loading="lazy">
+          <picture><source srcset="img/p13.webp?v=10" type="image/webp"><img src="img/p13.jpg?v=10" alt="Остеклённые балконы и эркеры в новом доме" loading="lazy"></picture>
           <figcaption><span>Балконы</span>Балконы-эркеры</figcaption>
         </figure>
         <figure class="work work--wide work--lg-wide" data-cat="vitrage" data-title="Остекление комплекса «Меридиан»">
-          <img src="img/p14.jpg?v=9" alt="Остекление бизнес-комплекса «Меридиан»" loading="lazy">
+          <picture><source srcset="img/p14.webp?v=10" type="image/webp"><img src="img/p14.jpg?v=10" alt="Остекление бизнес-комплекса «Меридиан»" loading="lazy"></picture>
           <figcaption><span>Витражи</span>Комплекс «Меридиан»</figcaption>
         </figure>
       </div>
@@ -627,7 +629,7 @@
       <div class="reviews__rating reveal">
         <div class="reviews__score">
           <strong>5,0</strong>
-          <div class="stars" aria-label="Рейтинг 5 из 5">
+          <div class="stars" role="img" aria-label="Рейтинг 5 из 5">
             <svg class="i" aria-hidden="true"><use href="#i-star"/></svg><svg class="i" aria-hidden="true"><use href="#i-star"/></svg><svg class="i" aria-hidden="true"><use href="#i-star"/></svg><svg class="i" aria-hidden="true"><use href="#i-star"/></svg><svg class="i" aria-hidden="true"><use href="#i-star"/></svg>
           </div>
           <span>12 оценок на 2ГИС</span>
@@ -828,7 +830,7 @@
       </div>
     </div>
     <nav class="footer__col" aria-label="Разделы сайта">
-      <h4>Разделы</h4>
+      <h3>Разделы</h3>
       <a href="#services">Услуги</a>
       <a href="#configurator">Конфигуратор окон</a>
       <a href="#works">Портфолио</a>
@@ -837,7 +839,7 @@
       <a href="#contacts">Контакты</a>
     </nav>
     <div class="footer__col">
-      <h4>Направления</h4>
+      <h3>Направления</h3>
       <a href="#services">Пластиковые окна</a>
       <a href="#services">Остекление балконов</a>
       <a href="#services">Двери ПВХ и алюминий</a>
@@ -846,7 +848,7 @@
       <a href="#services">Ремонт и регулировка</a>
     </div>
     <div class="footer__col footer__col--contacts">
-      <h4>Контакты</h4>
+      <h3>Контакты</h3>
       <p>Караганда,<br>ул. Волгодонская, 118/1</p>
       <a href="tel:+77007272737">+7 700 727 27 37</a>
       <a href="https://wa.me/77007272737" target="_blank" rel="noopener">Написать в WhatsApp</a>
@@ -855,6 +857,7 @@
   </div>
   <div class="container footer__bottom">
     <span>© 2003–2026 ТОО «Систем Пласт». БИН 030840011782. Все права защищены.</span>
+    <a href="/privacy.html">Политика конфиденциальности</a>
     <span>Информация на сайте не является публичной офертой. Цены ориентировочные — точная смета после бесплатного замера.</span>
   </div>
 </footer>
@@ -875,13 +878,13 @@
   <div class="chat__body" id="chatBody" aria-live="polite"></div>
   <div class="chat__quick" id="chatQuick"></div>
   <form class="chat__form" id="chatForm">
-    <input type="text" id="chatInput" placeholder="Напишите сообщение…" autocomplete="off" maxlength="500">
+    <input type="text" id="chatInput" placeholder="Напишите сообщение…" autocomplete="off" maxlength="500" aria-label="Сообщение">
     <button type="submit" aria-label="Отправить"><svg class="i" aria-hidden="true"><use href="#i-send"/></svg></button>
   </form>
 </aside>
 
 <!-- Модальное окно заявки -->
-<div class="modal" id="leadModal" aria-hidden="true" role="dialog" aria-labelledby="leadModalTitle">
+<div class="modal" id="leadModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle">
   <div class="modal__backdrop" data-close-modal></div>
   <div class="modal__card">
     <button class="modal__close" data-close-modal aria-label="Закрыть">✕</button>
@@ -905,13 +908,13 @@
         </label>
         <label class="consent">
           <input type="checkbox" id="leadConsent" checked>
-          <span>Согласен(а) на обработку персональных данных — только для связи по заявке</span>
+          <span>Согласен(а) на обработку персональных данных согласно <a href="/privacy.html" target="_blank" rel="noopener">политике конфиденциальности</a> — только для связи по заявке</span>
         </label>
         <button type="submit" class="btn btn-primary btn-lg btn-block" id="leadSubmit">
           <span>Отправить заявку</span>
           <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
         </button>
-        <p class="modal__note" id="leadInlineNote"></p>
+        <p class="modal__note" id="leadInlineNote" aria-live="polite"></p>
       </form>
     </div>
     <div class="modal__state modal__state--done" id="leadDoneState" hidden>
@@ -964,8 +967,8 @@
   <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 8V3.5h10V8M7 17H4.5A1.5 1.5 0 0 1 3 15.5v-6A1.5 1.5 0 0 1 4.5 8h15A1.5 1.5 0 0 1 21 9.5v6a1.5 1.5 0 0 1-1.5 1.5H17" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7 13h10v7.5H7z" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
 </svg>
 
-<script src="js/app.js?v=8"></script>
-<script src="js/configurator.js?v=8"></script>
-<script src="js/chat.js?v=8"></script>
+<script src="js/app.js?v=9"></script>
+<script src="js/configurator.js?v=9"></script>
+<script src="js/chat.js?v=9"></script>
 </body>
 </html>

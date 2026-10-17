@@ -7,7 +7,8 @@
  */
 import crypto from 'node:crypto';
 
-const PASSWORD = process.env.ADMIN_PASSWORD || 'sistem2026';
+const PASSWORD = process.env.ADMIN_PASSWORD || '';
+if (!PASSWORD) console.warn('[security] ADMIN_PASSWORD не задан — вход в админку отключён');
 const KV_URL = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL || '';
 const KV_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN || '';
 const LEADS_KEY = 'sistem-plast:leads';
@@ -72,8 +73,8 @@ function readBody(req, limit = 200 * 1024) {
     const chunks = [];
     req.on('data', (c) => {
       size += c.length;
-      if (size > limit) { reject(new Error('body too large')); req.destroy(); return; }
-      chunks.push(c);
+      if (size > limit) { reject(new Error('body too large')); req.removeAllListeners('data'); req.resume(); }
+      else chunks.push(c);
     });
     req.on('end', () => {
       try { resolve(chunks.length ? JSON.parse(Buffer.concat(chunks).toString('utf8')) : {}); }
@@ -176,9 +177,13 @@ export default async function handler(req, res) {
 
     if (p === '/api/login' && req.method === 'POST') {
       if (!rateLimit(ip, 'login', 10, 15 * 60_000)) return json(res, 429, { error: 'Слишком много попыток. Попробуйте через 15 минут.' });
+      if (!PASSWORD) return json(res, 401, { error: 'Вход в админку не настроен' });
       const body = await readBody(req);
       const pass = s(body.password, 100);
-      if (!pass || pass !== PASSWORD) return json(res, 401, { error: 'Неверный пароль' });
+      const a = Buffer.from(pass);
+      const b = Buffer.from(PASSWORD);
+      const okPass = a.length === b.length && crypto.timingSafeEqual(a, b);
+      if (!pass || !okPass) return json(res, 401, { error: 'Неверный пароль' });
       return json(res, 200, { token: issueToken() });
     }
 

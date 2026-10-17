@@ -60,7 +60,9 @@ check('POST /api/leads (honeypot → тихий ok)', r.ok && hon.ok && !hon.id,
 // 8. вход без пароля / с паролем
 r = await fetch(BASE + '/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{"password":"wrong"}' });
 check('POST /api/login (неверный пароль → 401)', r.status === 401, r.status);
-r = await fetch(BASE + '/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{"password":"sistem2026"}' });
+import { readFileSync } from 'node:fs';
+const adminPass = JSON.parse(readFileSync(new URL('../config.json', import.meta.url), 'utf8')).adminPassword;
+r = await fetch(BASE + '/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: adminPass }) });
 const login = await r.json();
 check('POST /api/login (верный пароль)', r.ok && !!login.token, 'токен получен');
 const token = login.token;

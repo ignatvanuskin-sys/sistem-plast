@@ -15,7 +15,7 @@ node server.js
 
 Открыть:
 - **Сайт:** http://localhost:3100
-- **Админ-панель:** http://localhost:3100/admin — пароль по умолчанию `sistem2026` (меняется в `config.json`)
+- **Админ-панель:** http://localhost:3100/admin — пароль задаётся в `config.json` → `"adminPassword"` (без него вход отключён)
 
 Для остановки — `Ctrl + C`. Порт меняется в `config.json` → `"port"`.
 
@@ -50,11 +50,13 @@ node server.js
 ```json
 {
   "port": 3100,
-  "adminPassword": "sistem2026",
+  "adminPassword": "ваш-пароль",
   "telegram": { "botToken": "", "chatId": "" },
   "webhookUrl": ""
 }
 ```
+
+Пароль для продакшена (Vercel) задаётся не в этом файле, а в переменной окружения `ADMIN_PASSWORD` проекта.
 
 ### Подключить Telegram-уведомления (5 минут)
 1. Напишите в Telegram боту **@BotFather** → `/newbot` → получите **токен** (вида `123456:ABC…`);

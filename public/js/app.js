@@ -118,7 +118,11 @@
     $$('.daynight__option', dayNight).forEach(opt => {
       opt.addEventListener('click', () => {
         const mode = opt.dataset.mode;
-        $$('.daynight__option', dayNight).forEach(o => o.classList.toggle('active', o === opt));
+        $$('.daynight__option', dayNight).forEach(o => {
+          const on = o === opt;
+          o.classList.toggle('active', on);
+          o.setAttribute('aria-pressed', String(on));
+        });
         $('#heroDay')?.classList.toggle('active', mode === 'day');
         $('#heroNight')?.classList.toggle('active', mode === 'night');
       });
@@ -196,21 +200,39 @@
 
   // ------------------------------------------------------------ lightbox --
   const lightbox = $('#lightbox');
-  $$('#worksGrid .work').forEach(w => w.addEventListener('click', () => {
+  function openLightbox(w) {
     const img = $('img', w);
-    $('#lightboxImg').src = img.src;
+    if (!img) return;
+    $('#lightboxImg').src = img.currentSrc || img.src;
     $('#lightboxImg').alt = img.alt;
     $('#lightboxTitle').textContent = w.dataset.title || '';
+    lightbox._opener = w;
     lightbox.classList.add('open');
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.classList.add('no-scroll');
-  }));
+    setTimeout(() => $('.lightbox__close', lightbox)?.focus(), 60);
+  }
+  $$('#worksGrid .work').forEach(w => {
+    w.setAttribute('tabindex', '0');
+    w.setAttribute('role', 'button');
+    const img = $('img', w);
+    if (img) w.setAttribute('aria-label', 'Открыть фото: ' + (w.dataset.title || img.alt || 'наша работа'));
+    w.addEventListener('click', () => openLightbox(w));
+    w.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(w); }
+    });
+  });
   function closeLightbox() {
-    lightbox?.classList.remove('open');
-    lightbox?.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('no-scroll');
+    if (!lightbox?.classList.contains('open')) return;
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    if (!document.body.dataset.chatLock) document.body.classList.remove('no-scroll');
+    if (lightbox._opener && document.contains(lightbox._opener)) setTimeout(() => lightbox._opener.focus({ preventScroll: true }), 0);
   }
   lightbox?.addEventListener('click', closeLightbox);
+  lightbox?.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') { e.preventDefault(); $('.lightbox__close', lightbox)?.focus(); }
+  });
 
   // ---------------------------------------------------------- телефонная --
   function maskPhone(input) {
@@ -269,6 +291,18 @@
     if (e.key === 'Escape') { closeLeadModal(); closeLightbox(); closeNav(); }
   });
 
+  // ловушка фокуса внутри модального окна заявки
+  modal?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab' || !modal.classList.contains('open')) return;
+    const focusables = $$('a[href], button:not([disabled]), input:not([type="hidden"]), textarea, [tabindex]:not([tabindex="-1"])', modal)
+      .filter(el => el.offsetParent !== null);
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
   // ----------------------------------------------------- отправка заявки ---
   async function submitLead(payload, { btn, noteEl } = {}) {
     const span = btn?.querySelector('span');
@@ -284,9 +318,12 @@
       if (!res.ok) throw new Error(data.error || 'Не удалось отправить. Попробуйте ещё раз.');
       return { ok: true, data };
     } catch (e) {
-      if (noteEl) noteEl.textContent = e.message;
-      toast('⚠️ ' + e.message);
-      return { ok: false, error: e.message };
+      const msg = (e instanceof TypeError)
+        ? 'Нет соединения. Проверьте интернет или позвоните: +7 700 727 27 37'
+        : (e.message || 'Не удалось отправить. Попробуйте ещё раз.');
+      if (noteEl) noteEl.textContent = msg;
+      toast('⚠️ ' + msg);
+      return { ok: false, error: msg };
     } finally {
       if (btn) { btn.disabled = false; if (span) span.textContent = original; }
     }
