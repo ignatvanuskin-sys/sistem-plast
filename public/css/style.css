@@ -522,9 +522,9 @@ h2 em, h1 em { font-style: normal; background: var(--grad); -webkit-background-c
 .review footer strong { display: block; font-size: .92rem; }
 .review footer small { color: var(--ink-soft); font-size: .78rem; }
 .reviews__nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 30px; }
-.reviews__dots { display: flex; gap: 7px; }
-.reviews__dots button { width: 8px; height: 8px; border-radius: 50%; background: var(--line); transition: all .3s; }
-.reviews__dots button.active { width: 26px; border-radius: 999px; background: var(--grad); }
+.reviews__dots { display: flex; gap: 0; }
+.reviews__dots button { width: 24px; height: 24px; padding: 8px; border-radius: 999px; background: var(--line); background-clip: content-box; transition: all .3s; }
+.reviews__dots button.active { width: 42px; background: var(--grad); background-clip: content-box; }
 
 /* ------------------------------------------------------------------- faq -- */
 .faq { background: var(--bg-light); }

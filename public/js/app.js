@@ -216,7 +216,9 @@
     w.setAttribute('tabindex', '0');
     w.setAttribute('role', 'button');
     const img = $('img', w);
-    if (img) w.setAttribute('aria-label', 'Открыть фото: ' + (w.dataset.title || img.alt || 'наша работа'));
+    const cap = $('figcaption', w);
+    const capText = cap ? [...cap.childNodes].map((n) => n.textContent.trim()).filter(Boolean).join(' ') : '';
+    w.setAttribute('aria-label', 'Открыть фото: ' + (capText || w.dataset.title || img?.alt || 'наша работа'));
     w.addEventListener('click', () => openLightbox(w));
     w.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(w); }
