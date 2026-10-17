@@ -144,12 +144,21 @@ h2 em, h1 em { font-style: normal; background: var(--grad); -webkit-background-c
 /* -------------------------------------------------------------- preheader -- */
 .header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 150;
-  padding: 18px 0; transition: padding .3s, background .3s, box-shadow .3s, backdrop-filter .3s;
+  padding: 18px 0; transition: padding .3s, box-shadow .3s;
+}
+/* фон и размытие шапки — на псевдоэлементе: backdrop-filter на самой шапке
+   превращал её в containing block и ломал полноэкранное меню при прокрутке */
+.header::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; pointer-events: none;
+  background: rgba(6, 10, 19, .82);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  transition: opacity .3s;
 }
 .header.scrolled {
-  padding: 10px 0; background: rgba(6, 10, 19, .82); backdrop-filter: blur(18px);
+  padding: 10px 0;
   box-shadow: 0 10px 40px -20px rgba(0, 0, 0, .8); border-bottom: 1px solid rgba(255, 255, 255, .06);
 }
+.header.scrolled::before { opacity: 1; }
 .header__inner { display: flex; align-items: center; gap: 20px; }
 
 .logo { display: flex; align-items: center; gap: 12px; color: #fff; }
