@@ -291,9 +291,9 @@
     const rows = [];
     rows.push([`Конструкция ${c.area.toFixed(2).replace('.', ',')} м²`, Math.round(c.frame)]);
     if (c.glazing) rows.push([GLASS[state.glass].label, Math.round(c.glazing)]);
-    if (c.opening) rows.push(`Фурнитура (${OPEN[state.open].label})`, c.opening);
+    if (c.opening) rows.push([`Фурнитура (${OPEN[state.open].label})`, c.opening]);
     if (c.colorAdd) rows.push(`Ламинация «${COLORS[state.color].name}»`, Math.round(c.colorAdd));
-    if (c.extrasSum) rows.push('Комплектация', c.extrasSum);
+    if (c.extrasSum) rows.push(['Комплектация', c.extrasSum]);
     if (c.tintAdd) rows.push('Тонировка стёкол', Math.round(c.tintAdd));
     rows.push(['Монтаж и доставка', 'Включено']);
     elBreakdown.innerHTML = rows.map(r => `<li><span>${r[0]}</span><b>${typeof r[1] === 'number' ? fmt(r[1]) : r[1]}</b></li>`).join('');
@@ -365,6 +365,42 @@
     render();
   }));
 
+  // ------- на телефоне конфигуратор — отдельное полноэкранное меню ----------
+  const confSection = $('#configurator');
+  const isMobileCfg = () => window.matchMedia('(max-width: 720px)').matches;
+
+  function openConfigurator() {
+    if (!isMobileCfg()) {
+      confSection?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    // если было открыто бургер-меню — закрыть его
+    $('#nav')?.classList.remove('open');
+    $('#burger')?.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('no-scroll');
+    document.body.classList.add('conf-open');
+    if (confSection) confSection.scrollTop = 0;
+    window.setTimeout(() => $('#confClose')?.focus({ preventScroll: true }), 80);
+  }
+  function closeConfigurator() {
+    document.body.classList.remove('conf-open');
+  }
+
+  // любые ссылки «#configurator» на телефоне открывают этот экран
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest && e.target.closest('a[href="#configurator"]');
+    if (!link || !isMobileCfg()) return;
+    e.preventDefault();
+    openConfigurator();
+  });
+  $('#confClose')?.addEventListener('click', closeConfigurator);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.body.classList.contains('conf-open')) closeConfigurator();
+  });
+  window.addEventListener('resize', () => {
+    if (!isMobileCfg()) closeConfigurator();
+  });
+
   // пресеты из карточек услуг
   $$('[data-preset]').forEach(btn => btn.addEventListener('click', () => {
     const preset = btn.dataset.preset;
@@ -380,8 +416,7 @@
     profWrap.style.opacity = preset === 'vitrage' ? '.45' : '1';
     profWrap.style.pointerEvents = preset === 'vitrage' ? 'none' : '';
     render();
-    const target = btn.dataset.scroll;
-    if (target) document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' });
+    if (btn.dataset.scroll) openConfigurator();
   }));
 
   // -------------------------------------------------------------- смета ----

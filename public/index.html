@@ -137,8 +137,8 @@
         <span>+7 700 727 27 37</span>
       </a>
       <button class="btn btn-primary btn-sm header__cta" data-open-lead data-source="header" data-source-label="Шапка сайта" data-title="Записаться на бесплатный замер">Бесплатный замер</button>
-      <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
-        <span></span><span></span>
+      <button class="burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
       </button>
     </div>
   </div>
@@ -317,6 +317,10 @@
 
   <!-- ========================================================= CONFIGURATOR -->
   <section class="section configurator" id="configurator">
+    <div class="configurator__bar">
+      <strong><svg class="i" aria-hidden="true"><use href="#i-window"/></svg> Конфигуратор окон</strong>
+      <button class="configurator__close" id="confClose" type="button" aria-label="Закрыть конфигуратор">✕</button>
+    </div>
     <div class="configurator__glow" aria-hidden="true"></div>
     <div class="container">
       <div class="sec-head sec-head--light reveal">
@@ -593,7 +597,7 @@
           <img src="img/p13.jpg?v=9" alt="Остеклённые балконы и эркеры в новом доме" loading="lazy">
           <figcaption><span>Балконы</span>Балконы-эркеры</figcaption>
         </figure>
-        <figure class="work" data-cat="vitrage" data-title="Остекление комплекса «Меридиан»">
+        <figure class="work work--wide work--lg-wide" data-cat="vitrage" data-title="Остекление комплекса «Меридиан»">
           <img src="img/p14.jpg?v=9" alt="Остекление бизнес-комплекса «Меридиан»" loading="lazy">
           <figcaption><span>Витражи</span>Комплекс «Меридиан»</figcaption>
         </figure>
@@ -762,14 +766,20 @@
           </button>
         </div>
 
-        <div class="contacts__map reveal">
-          <iframe
-            title="Систем Пласт на карте Караганды"
-            src="https://widgets.2gis.com/widget?type=firmsonmap&options=%7B%22pos%22%3A%7B%22lat%22%3A49.831818%2C%22lon%22%3A73.10655%2C%22zoom%22%3A17%7D%2C%22opt%22%3A%7B%22city%22%3A%22karaganda%22%7D%2C%22org%22%3A%2270000001062342075%22%7D"
-            loading="lazy" allowfullscreen></iframe>
-          <div class="contacts__map-fallback">
-            <p>Карта: Караганда, ул. Волгодонская, 118/1 — м-н «Новый город»</p>
-            <a class="btn btn-ghost btn-sm" href="https://2gis.kz/karaganda/directions/points/%7C73.10655%2C49.831818%3B70000001062342075" target="_blank" rel="noopener">Построить маршрут в 2ГИС</a>
+        <div class="contacts__route reveal">
+          <span class="contacts__route-pin" aria-hidden="true"><svg class="i"><use href="#i-map"/></svg></span>
+          <h3>Шоурум ждёт вас</h3>
+          <p class="contacts__route-addr">Караганда, ул. Волгодонская, 118/1</p>
+          <p class="contacts__route-sub">м-н «Новый город», 1 этаж. Приезжайте без записи — покажем образцы профилей и посчитаем смету на месте.</p>
+          <div class="contacts__route-actions">
+            <a class="btn btn-primary" href="https://2gis.kz/karaganda/directions/points/%7C73.10655%2C49.831818%3B70000001062342075" target="_blank" rel="noopener">
+              Маршрут в 2ГИС
+              <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+            <a class="btn btn-glass" href="tel:+77007272737">
+              <svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>
+              Позвонить
+            </a>
           </div>
         </div>
       </div>
