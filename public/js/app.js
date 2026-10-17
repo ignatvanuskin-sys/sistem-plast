@@ -112,6 +112,15 @@
     $$('.count').forEach(el => { el.textContent = Number(el.dataset.count || 0).toLocaleString('ru-RU'); });
   }
 
+  // ---------------------------- лента: пауза, пока палец на ленте (для касаний) --
+  const marquee = document.querySelector('.marquee');
+  if (marquee && window.matchMedia('(hover: none)').matches) {
+    marquee.addEventListener('pointerdown', () => marquee.classList.add('paused'));
+    const unpauseMarquee = () => marquee.classList.remove('paused');
+    window.addEventListener('pointerup', unpauseMarquee, { passive: true });
+    window.addEventListener('pointercancel', unpauseMarquee, { passive: true });
+  }
+
   // ------------------------------------------------------- reviews slider --
   const track = $('#reviewsTrack');
   if (track) {
