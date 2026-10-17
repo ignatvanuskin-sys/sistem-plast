@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Админ-панель — Систем Пласт</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070b14; --panel: #0d1424; --panel-2: #111a2e;
+      --line: rgba(255,255,255,.09); --ink: #eef3fb; --soft: rgba(255,255,255,.55);
+      --accent: #2f6bff; --ice: #7dd7ff; --wa: #22c55e;
+      --grad: linear-gradient(135deg,#7dd7ff,#2f6bff);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Manrope','Segoe UI',sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+    a { color: var(--ice); text-decoration: none; }
+    button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    .wrap { max-width: 1240px; margin: 0 auto; padding: 26px 26px 60px; }
+
+    /* ---------- вход ---------- */
+    .login-screen { min-height: 100vh; display: grid; place-items: center; padding: 20px; }
+    .login-card {
+      width: min(420px, 100%); background: var(--panel); border: 1px solid var(--line); border-radius: 24px;
+      padding: 40px 36px; box-shadow: 0 40px 100px -40px rgba(0,0,0,.9);
+    }
+    .login-card .logo { font-family: 'Unbounded'; font-size: 1rem; font-weight: 700; letter-spacing: .08em; margin-bottom: 6px; }
+    .login-card .logo span { color: var(--ice); }
+    .login-card p { color: var(--soft); font-size: .9rem; margin-bottom: 26px; }
+    .login-card input {
+      width: 100%; padding: 15px 18px; border-radius: 14px; margin-bottom: 14px;
+      background: rgba(255,255,255,.06); border: 1.5px solid rgba(255,255,255,.14); color: #fff; outline: none; font-size: 1rem;
+      transition: border-color .2s;
+    }
+    .login-card input:focus { border-color: var(--accent); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 13px 24px; border-radius: 999px; font-weight: 700; font-size: .93rem; transition: all .22s; }
+    .btn-primary { background: var(--grad); color: #fff; box-shadow: 0 14px 32px -14px rgba(47,107,255,.8); }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-ghost { border: 1.5px solid var(--line); color: var(--ink); }
+    .btn-ghost:hover { border-color: var(--accent); }
+    .btn-sm { padding: 8px 16px; font-size: .82rem; }
+    .btn-wa { background: var(--wa); color: #fff; }
+    .btn-block { width: 100%; }
+    .err { color: #ff8ba0; font-size: .85rem; min-height: 1.2em; margin-top: 10px; }
+
+    /* ---------- шапка ---------- */
+    .topbar { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; padding: 18px 0 26px; }
+    .topbar .brand { font-family: 'Unbounded'; font-weight: 700; font-size: .95rem; letter-spacing: .06em; }
+    .topbar .brand span { color: var(--ice); }
+    .topbar .who { color: var(--soft); font-size: .85rem; }
+    .topbar .actions { margin-left: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* ---------- метрики ---------- */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+    .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 22px; }
+    .stat small { display: block; color: var(--soft); font-size: .8rem; margin-bottom: 8px; }
+    .stat strong { font-family: 'Unbounded'; font-size: 1.7rem; font-weight: 600; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    /* ---------- фильтры ---------- */
+    .filters { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 18px; }
+    .chip { padding: 9px 18px; border-radius: 999px; border: 1.5px solid var(--line); font-weight: 700; font-size: .85rem; color: var(--soft); transition: all .2s; }
+    .chip:hover { color: #fff; border-color: rgba(255,255,255,.3); }
+    .chip.active { background: var(--grad); color: #fff; border-color: transparent; }
+    .filters input {
+      margin-left: auto; padding: 11px 18px; border-radius: 999px; min-width: 260px;
+      background: var(--panel); border: 1.5px solid var(--line); color: #fff; outline: none; font-size: .9rem;
+    }
+    .filters input:focus { border-color: var(--accent); }
+
+    /* ---------- таблица ---------- */
+    .table-wrap { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+    thead th {
+      text-align: left; padding: 15px 16px; font-size: .74rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--soft); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.02); white-space: nowrap;
+    }
+    tbody td { padding: 15px 16px; border-bottom: 1px solid rgba(255,255,255,.05); vertical-align: top; }
+    tbody tr:hover { background: rgba(125,215,255,.04); }
+    tbody tr:last-child td { border-bottom: none; }
+    .lead-name { font-weight: 800; }
+    .lead-phone { color: var(--ice); font-weight: 700; white-space: nowrap; }
+    .lead-sum { color: var(--soft); font-size: .82rem; max-width: 300px; }
+    .lead-price { font-weight: 800; white-space: nowrap; }
+    .lead-date { color: var(--soft); font-size: .8rem; white-space: nowrap; }
+    .badge { display: inline-block; padding: 5px 12px; border-radius: 999px; font-size: .76rem; font-weight: 800; }
+    .badge.new { background: rgba(125,215,255,.14); color: var(--ice); }
+    .badge.progress { background: rgba(242,182,76,.15); color: #f2b64c; }
+    .badge.done { background: rgba(34,197,94,.16); color: #4ade80; }
+    .badge.rejected { background: rgba(255,93,122,.14); color: #ff8ba0; }
+    .badge.src { background: rgba(255,255,255,.07); color: var(--soft); font-weight: 600; }
+    select.status-sel {
+      background: var(--panel-2); color: var(--ink); border: 1px solid var(--line); border-radius: 10px;
+      padding: 8px 10px; font-size: .82rem; outline: none; cursor: pointer;
+    }
+    .row-actions { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+    .mini { padding: 6px 12px; border-radius: 10px; font-size: .76rem; font-weight: 700; border: 1px solid var(--line); color: var(--soft); transition: all .2s; display: inline-flex; gap: 6px; align-items: center; }
+    .mini:hover { color: #fff; border-color: var(--ice); }
+    .mini.danger:hover { border-color: #ff5d7a; color: #ff8ba0; }
+    .note-input {
+      width: 100%; margin-top: 8px; padding: 8px 12px; border-radius: 10px; font-size: .82rem;
+      background: var(--panel-2); border: 1px solid var(--line); color: var(--ink); outline: none;
+    }
+    .note-input:focus { border-color: var(--accent); }
+    .empty { padding: 60px 20px; text-align: center; color: var(--soft); }
+    .empty strong { display: block; font-size: 1.1rem; color: var(--ink); margin-bottom: 6px; font-family: 'Unbounded'; }
+
+    .toast {
+      position: fixed; left: 50%; bottom: 26px; transform: translate(-50%, 20px); z-index: 100;
+      background: #0d1424; border: 1px solid rgba(125,215,255,.35); color: #fff; font-weight: 700; font-size: .88rem;
+      padding: 13px 24px; border-radius: 999px; opacity: 0; pointer-events: none; transition: all .3s;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (max-width: 900px) {
+      .stats { grid-template-columns: 1fr 1fr; }
+      .table-wrap { overflow-x: auto; }
+      table { min-width: 860px; }
+      .filters input { margin-left: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ================================================================ ВХОД -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="logo">СИСТЕМ <span>ПЛАСТ</span></div>
+    <p>Панель управления заявками. Введите пароль администратора.</p>
+    <form id="loginForm">
+      <input type="password" id="pass" placeholder="Пароль" autocomplete="current-password" required>
+      <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Войти в панель</button>
+      <div class="err" id="loginErr"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ============================================================== ПАНЕЛЬ -->
+<div class="wrap" id="app" hidden>
+  <div class="topbar">
+    <div class="brand">СИСТЕМ <span>ПЛАСТ</span> · заявки</div>
+    <div class="who" id="who">—</div>
+    <div class="actions">
+      <button class="btn btn-ghost btn-sm" id="refreshBtn">↻ Обновить</button>
+      <a class="btn btn-primary btn-sm" id="csvBtn" href="#">⬇ Экспорт CSV</a>
+      <button class="btn btn-ghost btn-sm" id="logoutBtn">Выйти</button>
+    </div>
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="filters">
+    <button class="chip active" data-status="all">Все</button>
+    <button class="chip" data-status="new">Новые</button>
+    <button class="chip" data-status="progress">В работе</button>
+    <button class="chip" data-status="done">Успешные</button>
+    <button class="chip" data-status="rejected">Отказы</button>
+    <input type="search" id="search" placeholder="Поиск: имя, телефон, текст…" aria-label="Поиск заявок">
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Дата</th><th>Источник</th><th>Клиент</th><th>Заявка</th><th>Ориентир</th><th>Статус</th><th>Действия</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="empty" id="empty" hidden>
+      <strong>Пока нет заявок</strong>
+      Заявки с сайта появятся здесь автоматически — с ценой из конфигуратора и источником перехода.
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  let token = localStorage.getItem('sp_admin_token') || '';
+  let status = 'all';
+  let search = '';
+  let leads = [];
+  let timer = null;
+
+  function toast(msg) {
+    const t = $('#toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  async function api(path, opts = {}) {
+    const res = await fetch(path, {
+      ...opts,
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token, ...(opts.headers || {}) },
+    });
+    if (res.status === 401) { logout(); throw new Error('Сессия истекла'); }
+    return res;
+  }
+
+  // ------------------------------------------------------------- вход ------
+  $('#loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    $('#loginErr').textContent = '';
+    const btn = $('#loginBtn');
+    btn.disabled = true; btn.textContent = 'Проверяем…';
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: $('#pass').value }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Ошибка входа');
+      token = data.token;
+      localStorage.setItem('sp_admin_token', token);
+      start();
+    } catch (err) {
+      $('#loginErr').textContent = err.message;
+    } finally {
+      btn.disabled = false; btn.textContent = 'Войти в панель';
+    }
+  });
+
+  function logout() {
+    clearInterval(timer);
+    localStorage.removeItem('sp_admin_token');
+    token = '';
+    $('#app').hidden = true;
+    $('#loginScreen').style.display = '';
+  }
+  $('#logoutBtn').addEventListener('click', () => { fetch('/api/logout', { method: 'POST', headers: { Authorization: 'Bearer ' + token } }).finally(logout); });
+
+  // ------------------------------------------------------------- данные ----
+  async function loadStats() {
+    const res = await api('/api/stats');
+    const s = await res.json();
+    const sources = Object.entries(s.bySource || {}).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([k, v]) => `${k}: ${v}`).join(' · ') || '—';
+    $('#stats').innerHTML = `
+      <div class="stat"><small>Всего заявок</small><strong>${s.total}</strong></div>
+      <div class="stat"><small>За 7 дней</small><strong>${s.week}</strong></div>
+      <div class="stat"><small>Сегодня</small><strong>${s.today}</strong></div>
+      <div class="stat"><small>Средний ориентир</small><strong>${s.avgPrice ? s.avgPrice.toLocaleString('ru-RU') + ' ₸' : '—'}</strong></div>
+    `;
+    $('#who').textContent = `Источники: ${sources}`;
+  }
+
+  const STATUS_LABEL = { new: 'Новая', progress: 'В работе', done: 'Успешно', rejected: 'Отказ' };
+
+  async function loadLeads() {
+    const q = new URLSearchParams({ status, q: search });
+    const res = await api('/api/leads?' + q.toString());
+    const data = await res.json();
+    leads = data.leads || [];
+    renderRows();
+  }
+
+  function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+
+  function renderRows() {
+    const tbody = $('#rows');
+    const empty = $('#empty');
+    empty.hidden = leads.length > 0;
+    if (!empty.hidden) {
+      const filtered = status !== 'all' || search;
+      empty.innerHTML = filtered
+        ? '<strong>Ничего не найдено</strong>Попробуйте изменить фильтр или поисковый запрос.'
+        : '<strong>Пока нет заявок</strong>Заявки с сайта появятся здесь автоматически — с ценой из конфигуратора и источником перехода.';
+    }
+    tbody.innerHTML = leads.map(l => {
+      const d = new Date(l.createdAt);
+      const date = d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' }) + ' ' + d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+      const waText = encodeURIComponent(`Здравствуйте${l.name && l.name !== 'Клиент из чата' ? ', ' + l.name : ''}! Это «Систем Пласт». Вы оставляли заявку на сайте${l.configSummary ? ': ' + l.configSummary : ''}. Когда вам удобно обсудить?`);
+      return `
+      <tr data-id="${esc(l.id)}">
+        <td class="lead-date">${date}</td>
+        <td><span class="badge src">${esc(l.sourceLabel || l.source)}</span></td>
+        <td><div class="lead-name">${esc(l.name || '—')}</div><div class="lead-phone"><a href="tel:${esc(l.phone)}">${esc(l.phone)}</a></div></td>
+        <td class="lead-sum">${esc(l.message || '').slice(0, 260)}${l.page ? `<div style="opacity:.5;font-size:.75rem">стр: ${esc(l.page)}</div>` : ''}</td>
+        <td class="lead-price">${l.price ? l.price.toLocaleString('ru-RU') + ' ₸' : '—'}<div class="lead-sum">${esc(l.configSummary || '').slice(0, 160)}</div></td>
+        <td>
+          <select class="status-sel" data-id="${esc(l.id)}" aria-label="Статус заявки">
+            ${Object.entries(STATUS_LABEL).map(([v, t]) => `<option value="${v}" ${l.status === v ? 'selected' : ''}>${t}</option>`).join('')}
+          </select>
+          <div style="margin-top:8px"><input class="note-input" data-id="${esc(l.id)}" placeholder="Заметка…" value="${esc(l.note || '')}"></div>
+        </td>
+        <td>
+          <div class="row-actions">
+            <a class="mini" href="https://wa.me/${esc(String(l.phone).replace(/\D/g, ''))}?text=${waText}" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="mini" href="tel:${esc(l.phone)}">Позвонить</a>
+            <button class="mini danger" data-del="${esc(l.id)}">Удалить</button>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  // обработчики статусов/заметок/удаления (делегирование)
+  document.addEventListener('change', async (e) => {
+    const sel = e.target.closest('.status-sel');
+    if (sel) {
+      await api('/api/leads/' + sel.dataset.id, { method: 'PATCH', body: JSON.stringify({ status: sel.value }) });
+      toast('Статус обновлён');
+      return;
+    }
+  });
+  document.addEventListener('blur', async (e) => {
+    const note = e.target.closest('.note-input');
+    if (note) {
+      await api('/api/leads/' + note.dataset.id, { method: 'PATCH', body: JSON.stringify({ note: note.value }) });
+      toast('Заметка сохранена');
+    }
+  }, true);
+  document.addEventListener('click', async (e) => {
+    const del = e.target.closest('[data-del]');
+    if (del) {
+      if (!confirm('Удалить заявку безвозвратно?')) return;
+      await api('/api/leads/' + del.dataset.del, { method: 'DELETE' });
+      toast('Заявка удалена');
+      loadLeads(); loadStats();
+    }
+  });
+
+  // фильтры
+  document.querySelectorAll('.chip[data-status]').forEach(chip => chip.addEventListener('click', () => {
+    document.querySelectorAll('.chip[data-status]').forEach(c => c.classList.toggle('active', c === chip));
+    status = chip.dataset.status;
+    loadLeads();
+  }));
+  let searchTimer;
+  $('#search').addEventListener('input', (e) => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => { search = e.target.value.trim(); loadLeads(); }, 350);
+  });
+
+  $('#refreshBtn').addEventListener('click', () => { loadLeads(); loadStats(); toast('Обновлено'); });
+  $('#csvBtn').addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+      const res = await api('/api/export.csv');
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'leads-' + new Date().toISOString().slice(0, 10) + '.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+    } catch {
+      toast('Не удалось выгрузить CSV');
+    }
+  });
+
+  // -------------------------------------------------------------- старт -----
+  async function start() {
+    $('#loginScreen').style.display = 'none';
+    $('#app').hidden = false;
+    await Promise.allSettled([loadLeads(), loadStats()]);
+    clearInterval(timer);
+    timer = setInterval(() => { loadLeads().catch(() => {}); loadStats().catch(() => {}); }, 30000);
+  }
+
+  if (token) {
+    // проверяем токен
+    fetch('/api/stats', { headers: { Authorization: 'Bearer ' + token } })
+      .then(r => { if (r.ok) start(); else logout(); })
+      .catch(logout);
+  }
+})();
+</script>
+</body>
+</html>

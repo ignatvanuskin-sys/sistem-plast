@@ -1,0 +1,6 @@
+{
+  "port": 3100,
+  "adminPassword": "смените-этот-пароль",
+  "telegram": { "botToken": "", "chatId": "" },
+  "webhookUrl": ""
+}

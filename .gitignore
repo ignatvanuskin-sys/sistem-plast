@@ -1,0 +1,10 @@
+# Локальные данные и настройки — не публикуем в открытый репозиторий
+config.json
+data/leads.json
+
+# Системное и служебное
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#060a13"/><stop offset=".55" stop-color="#0b1526"/><stop offset="1" stop-color="#12294f"/>
+    </linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7dd7ff"/><stop offset="1" stop-color="#2f6bff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".82" cy=".2" r=".7">
+      <stop offset="0" stop-color="rgba(47,107,255,.5)"/><stop offset="1" stop-color="rgba(47,107,255,0)"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- окно-паттерн справа -->
+  <g opacity=".8">
+    <rect x="810" y="120" width="290" height="380" rx="10" fill="none" stroke="url(#acc)" stroke-width="7"/>
+    <line x1="955" y1="120" x2="955" y2="500" stroke="url(#acc)" stroke-width="7"/>
+    <line x1="810" y1="310" x2="955" y2="310" stroke="url(#acc)" stroke-width="3.5" opacity=".7"/>
+    <path d="M840 400l52-52" stroke="#7dd7ff" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+  </g>
+
+  <!-- бренд -->
+  <text x="80" y="180" font-family="Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="10" fill="#7dd7ff">СИСТЕМ ПЛАСТ</text>
+  <text x="80" y="300" font-family="Arial, sans-serif" font-size="64" font-weight="800" fill="#ffffff">Окна, в которых</text>
+  <text x="80" y="376" font-family="Arial, sans-serif" font-size="64" font-weight="800" fill="#7dd7ff">тихо, тепло и красиво</text>
+  <text x="80" y="452" font-family="Arial, sans-serif" font-size="27" fill="#a9b9d8">Пластиковые окна · Балконы · Двери · Витражи</text>
+  <text x="80" y="492" font-family="Arial, sans-serif" font-size="27" fill="#a9b9d8">Караганда · с 2003 года · гарантия до 10 лет</text>
+
+  <!-- плашки -->
+  <g font-family="Arial, sans-serif" font-size="22" font-weight="700">
+    <rect x="80" y="530" width="220" height="52" rx="26" fill="rgba(125,215,255,.14)" stroke="rgba(125,215,255,.45)"/>
+    <text x="110" y="564" fill="#bfe6ff">★ 5,0 на 2ГИС</text>
+    <rect x="320" y="530" width="290" height="52" rx="26" fill="rgba(242,182,76,.13)" stroke="rgba(242,182,76,.5)"/>
+    <text x="348" y="564" fill="#ffd88a">Рассрочка 0-0-24</text>
+    <rect x="630" y="530" width="300" height="52" rx="26" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.25)"/>
+    <text x="658" y="564" fill="#e8eefb">+7 700 727 27 37</text>
+  </g>
+</svg>

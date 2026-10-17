@@ -1,0 +1,18 @@
+{
+  "name": "sistem-plast-website",
+  "version": "1.0.0",
+  "description": "Премиальный сайт для компании «Систем Пласт» (Караганда) — окна, балконы, двери, витражи. Конфигуратор окон, ИИ-консультант, админ-панель и автоматизация заявок.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "images": "node tools/download-images.mjs",
+    "demo-leads": "node tools/seed-demo-leads.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}
